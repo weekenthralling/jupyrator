@@ -1,0 +1,25 @@
+name: Run KernelManager Controller Unit Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'controllers/**'
+  workflow_dispatch: # Allows to trigger the workflow manually in GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone the code
+      uses: actions/checkout@v4
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '~1.22'
+    - name: Running Tests
+      run: |
+        cd controllers
+        go mod tidy
+        make test
